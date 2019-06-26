@@ -174,8 +174,10 @@ public class BsplineObject implements Drawable {
 				
 				createBehObj();			// creates limbs
 				
-				// JK adding morphs			
-				if(this.getSpec().isMorphLengthWidthOnly()){	
+				
+				// JK adding morphs
+				if (doMorph) {
+//				if(this.getSpec().isMorphLengthWidthOnly()){	
 					createLengthWidthMorphObj();
 				}
 
@@ -714,8 +716,8 @@ public class BsplineObject implements Drawable {
 		List<Integer> limbsToMorph = new ArrayList<Integer>();
 
 	
-System.out.println("createLengthWidthMorphObj: " + numLimbsTotal + " total limbs ");
-System.out.format("\t%s : %4s %6s %6s\n", "Dim", "limb", "dim0", "dim1");
+//System.out.println("createLengthWidthMorphObj: " + numLimbsTotal + " total limbs ");
+//System.out.format("\t%s : %4s %6s %6s\n", "Dim", "limb", "dim0", "dim1");
 		
 		// first length, then width dimension
 		for(int dim = 0; dim < 2; dim++){
@@ -2367,7 +2369,7 @@ System.out.format("\t%s : %4s %6s %6s\n", "Dim", "limb", "dim0", "dim1");
 //	
 //	
 //	
-	void stimChooser_allCategories() {
+	public void stimChooser_allCategories() {
 		//THIS IS USED!!!
 		
 		// pre-set stim specs:
@@ -3347,6 +3349,7 @@ System.out.format("\t%s : %4s %6s %6s\n", "Dim", "limb", "dim0", "dim1");
 	public void setStimCat(int stimCat) {
 		if (0 <= stimCat & stimCat < StimCategories.values().length) {
 			this.stimCat = StimCategories.values()[stimCat];
+			spec.setStimType(StimType.BEH_MedialAxis.toString());
 		}	// else stimCat = null
 	}
 	public double getxPos() {
