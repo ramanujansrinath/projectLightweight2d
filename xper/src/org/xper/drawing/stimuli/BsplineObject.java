@@ -2412,189 +2412,189 @@ public class BsplineObject implements Drawable {
 		switch(stimCat) {
 		case SEVEN_h:		// #0
 
-			if (doMorph) {
-				
-				double dw = m/2+1; 	// delta width factor; or for more changes at joints: dw = m/1+1;
-				double lr = m*1;	// lower right curvature change factor
-				double ul = m*0;	// upper left curvature change factor
-				limbs.add(new LimbSpec(-1,l[0]*4,w,w*dw,  0,curv1st)); 								// lr joint 	-- bulge	[maybe change ori slightly (to counter medial-axis change?): (ori +5*m)]
-				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));										// lower left
-				limbs.add(new LimbSpec( 1,l[2]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));			// lower right 	-- sharpens curvature and slightly lengthens end
-				limbs.add(new LimbSpec( 0,l[3]*4,w/dw, 90,curv));									// ul joint 	-- pinch
-				limbs.add(new LimbSpec( 4,l[4]*3,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));		// upper left 	-- broadens curvature (by increasing width only)			
-
-			} else { // exemplar
+//			if (doMorph) {
+//				
+//				double dw = m/2+1; 	// delta width factor; or for more changes at joints: dw = m/1+1;
+//				double lr = m*1;	// lower right curvature change factor
+//				double ul = m*0;	// upper left curvature change factor
+//				limbs.add(new LimbSpec(-1,l[0]*4,w,w*dw,  0,curv1st)); 								// lr joint 	-- bulge	[maybe change ori slightly (to counter medial-axis change?): (ori +5*m)]
+//				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));										// lower left
+//				limbs.add(new LimbSpec( 1,l[2]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));			// lower right 	-- sharpens curvature and slightly lengthens end
+//				limbs.add(new LimbSpec( 0,l[3]*4,w/dw, 90,curv));									// ul joint 	-- pinch
+//				limbs.add(new LimbSpec( 4,l[4]*3,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));		// upper left 	-- broadens curvature (by increasing width only)			
+//
+//			} else { // exemplar
 				limbs.add(new LimbSpec(-1,l[0]*4,w,  0,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[2]*4,w,270,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w, 90,curv));
 				limbs.add(new LimbSpec( 4,l[4]*3,w,180,curv));
-			}		
+//			}		
 			break;
 
 		case Y_h:			// #1
 
-			if (doMorph) {
-
-				double dw = m/2+1; 	// delta width factor
-				double lr = m*1;	// lower right curvature change factor
-				double ul = m*0;	// upper left curvature change factor
-				limbs.add(new LimbSpec(-1,l[0]*4,w,w*dw,  0,curv1st)); 								// lr joint 	-- bulge	[maybe change ori slightly (to counter medial-axis change?): (ori +5*m)]
-				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));										// lower left
-				limbs.add(new LimbSpec( 1,l[2]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));			// lower right 	-- sharpens curvature and slightly lengthens end
-				limbs.add(new LimbSpec( 0,l[3]*3,w/dw, 90,curv));									// ul joint 	-- pinch
-				limbs.add(new LimbSpec( 4,l[4]*4,w, 45,curv));										// upper right
-				limbs.add(new LimbSpec( 4,l[5]*4,w+m*2,135,new double[]{1+ul,1+ul,1+ul,1+ul}));		// upper left 	-- broadens curvature (by increasing width only)
-//				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*4,1+m*4,1+m*6,1+m*6},true));
-//				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*3,2,1,1},true));
-			
-			} else {
+//			if (doMorph) {
+//
+//				double dw = m/2+1; 	// delta width factor
+//				double lr = m*1;	// lower right curvature change factor
+//				double ul = m*0;	// upper left curvature change factor
+//				limbs.add(new LimbSpec(-1,l[0]*4,w,w*dw,  0,curv1st)); 								// lr joint 	-- bulge	[maybe change ori slightly (to counter medial-axis change?): (ori +5*m)]
+//				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));										// lower left
+//				limbs.add(new LimbSpec( 1,l[2]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));			// lower right 	-- sharpens curvature and slightly lengthens end
+//				limbs.add(new LimbSpec( 0,l[3]*3,w/dw, 90,curv));									// ul joint 	-- pinch
+//				limbs.add(new LimbSpec( 4,l[4]*4,w, 45,curv));										// upper right
+//				limbs.add(new LimbSpec( 4,l[5]*4,w+m*2,135,new double[]{1+ul,1+ul,1+ul,1+ul}));		// upper left 	-- broadens curvature (by increasing width only)
+////				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*4,1+m*4,1+m*6,1+m*6},true));
+////				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*3,2,1,1},true));
+//			
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*4,w,  0,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[2]*4,w,270,curv));
 				limbs.add(new LimbSpec( 0,l[3]*3,w, 90,curv));
 				limbs.add(new LimbSpec( 4,l[4]*4,w, 45,curv));
 				limbs.add(new LimbSpec( 4,l[5]*4,w,135,curv));
-			}
+//			}
 			break;
 
 		case downL_downT:	// #2
 
-			if (doMorph) {
-
-				double dw = m/2+1; 		// delta width factor
-//				double dw2 = m/1+1; 	// delta width factor2
-				double ur = m*1-0.01;	// upper right curvature change factor
-
-				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw, 90,curv1st,new double[]{0,-l[0]*8/2}));	// ur joint 	-- bulge; ll joint  -- pinch
-				limbs.add(new LimbSpec( 0,l[1]*3,w*dw,  0,curv));									// lower right 	
-				limbs.add(new LimbSpec( 0,l[2]*3,w*dw,180,curv));									// lower left   -- broadens curvature
-				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- shaprens curvature			
-
-				// TODO: fix bottom morph, make the whole width of bottom enlarge, but keep upward branch small
-				
-			} else {
+//			if (doMorph) {
+//
+//				double dw = m/2+1; 		// delta width factor
+////				double dw2 = m/1+1; 	// delta width factor2
+//				double ur = m*1-0.01;	// upper right curvature change factor
+//
+//				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw, 90,curv1st,new double[]{0,-l[0]*8/2}));	// ur joint 	-- bulge; ll joint  -- pinch
+//				limbs.add(new LimbSpec( 0,l[1]*3,w*dw,  0,curv));									// lower right 	
+//				limbs.add(new LimbSpec( 0,l[2]*3,w*dw,180,curv));									// lower left   -- broadens curvature
+//				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- shaprens curvature			
+//
+//				// TODO: fix bottom morph, make the whole width of bottom enlarge, but keep upward branch small
+//				
+//			} else {
 				//yPos = yPos-l[0]*8/2;	// don't change xPos, yPos as those are only used in drawing routines
 				limbs.add(new LimbSpec(-1,l[0]*8,  w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*3,  w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,  w,180,curv));
 				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,curv));			
-			}
+//			}
 			break;
 
 		case I_downT:		// #3
 
-			if (doMorph) {
-				
-				//double dw = m/2+1; 	// delta width factor
-				double dw2 = m/1+1;		// delta width factor2
-				double u = m*1-0.01;	// upper endpoint curvature change factor
-				double ll = m*0;	// lower left curvature change factor
-				
-				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw2, 90,new double[]{1,1,1,1,1-u,1-u,1+u,1+u},new double[]{0,-l[0]*8/2}));	// ur joint 	-- bulge; ll joint  -- pinch
-				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));										// lower right 	
-				limbs.add(new LimbSpec( 0,l[2]*3,w+m*2,180,new double[]{1+ll,1+ll,1+ll,1+ll}));		// lower left   -- broadens curvature
-				
-				// TODO: finish bottom morph (see #2 above)
-				
-			} else {
+//			if (doMorph) {
+//				
+//				//double dw = m/2+1; 	// delta width factor
+//				double dw2 = m/1+1;		// delta width factor2
+//				double u = m*1-0.01;	// upper endpoint curvature change factor
+//				double ll = m*0;	// lower left curvature change factor
+//				
+//				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw2, 90,new double[]{1,1,1,1,1-u,1-u,1+u,1+u},new double[]{0,-l[0]*8/2}));	// ur joint 	-- bulge; ll joint  -- pinch
+//				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));										// lower right 	
+//				limbs.add(new LimbSpec( 0,l[2]*3,w+m*2,180,new double[]{1+ll,1+ll,1+ll,1+ll}));		// lower left   -- broadens curvature
+//				
+//				// TODO: finish bottom morph (see #2 above)
+//				
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*8,  w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*3,  w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,  w,180,curv));
-			}
+//			}
 			break;
 
 		case SEVEN_t:		// #4
 
-			if (doMorph) {
-				
-				double dw = m/2+1; 	// delta width factor
-				double lr = m*1;	// lower right curvature change factor
-				double ul = m*0;	// upper left curvature change factor
-			
-				limbs.add(new LimbSpec(-1,l[0]*4,w*dw,w/dw, 90,curv1st));								// lr and ul joint	-- pinch & bulge
-//				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower right	-- sharpens curvature
-				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));											// lower right	
-				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
-				limbs.add(new LimbSpec( 0,l[3]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower down   -- sharpens curvature
-				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature		
-				
-			} else {
+//			if (doMorph) {
+//				
+//				double dw = m/2+1; 	// delta width factor
+//				double lr = m*1;	// lower right curvature change factor
+//				double ul = m*0;	// upper left curvature change factor
+//			
+//				limbs.add(new LimbSpec(-1,l[0]*4,w*dw,w/dw, 90,curv1st));								// lr and ul joint	-- pinch & bulge
+////				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower right	-- sharpens curvature
+//				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));											// lower right	
+//				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
+//				limbs.add(new LimbSpec( 0,l[3]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower down   -- sharpens curvature
+//				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature		
+//				
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*4,w, 90,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w,180,curv));
-			}
+//			}
 			break;
 
 		case Y_t:			// #5
 
-			if (doMorph) {
-				
-				double dw = m/2+1; 	// delta width factor
-				double lr = m*1;	// lower right curvature change factor
-				double ul = m*0;	// upper left curvature change factor
-			
-				limbs.add(new LimbSpec(-1,l[0]*3,w*dw,w/dw, 90,curv1st));								// lr and ul joint	-- pinch & bulge
-//				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower right	-- sharpens curvature
-				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));											// lower right	
-				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
-				limbs.add(new LimbSpec( 0,l[3]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower down   -- sharpens curvature
-				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
-				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,135,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature
-				
-			} else {
+//			if (doMorph) {
+//				
+//				double dw = m/2+1; 	// delta width factor
+//				double lr = m*1;	// lower right curvature change factor
+//				double ul = m*0;	// upper left curvature change factor
+//			
+//				limbs.add(new LimbSpec(-1,l[0]*3,w*dw,w/dw, 90,curv1st));								// lr and ul joint	-- pinch & bulge
+////				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower right	-- sharpens curvature
+//				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));											// lower right	
+//				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
+//				limbs.add(new LimbSpec( 0,l[3]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower down   -- sharpens curvature
+//				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
+//				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,135,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature
+//				
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*3,w, 90,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w,135,curv));
-			}
+//			}
 			break;
 
 		case downL_J:		// #6
 			
-			if (doMorph) {
-				
-				double dw = m/2+1; 		// delta width factor
-				double dw2 = m/1+1; 	// delta width factor2
-				double ur = m*1-0.01;	// upper right curvature change factor
-				
-				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw, 90,curv1st,new double[]{0,-l[0]*8/2}));	// ur joint -- bulge
-				limbs.add(new LimbSpec( 0,l[1]*4,w/dw,180,curv));									// j, lower left  -- pinch 
-				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));									// j. lower left  -- broaden curvature
-				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- sharpens curvature
-				
-			} else {
+//			if (doMorph) {
+//				
+//				double dw = m/2+1; 		// delta width factor
+//				double dw2 = m/1+1; 	// delta width factor2
+//				double ur = m*1-0.01;	// upper right curvature change factor
+//				
+//				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw, 90,curv1st,new double[]{0,-l[0]*8/2}));	// ur joint -- bulge
+//				limbs.add(new LimbSpec( 0,l[1]*4,w/dw,180,curv));									// j, lower left  -- pinch 
+//				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));									// j. lower left  -- broaden curvature
+//				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- sharpens curvature
+//				
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*8,w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,180,curv));
 				limbs.add(new LimbSpec( 2,l[2]*2,w, 90,curv));
 				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,curv));	
-			}
+//			}
 			break;
 
 		case I_J:			// #7
 
-			if (doMorph) {
-				
-				double dw = m/2+1; 		// delta width factor
-				double dw2 = m/1+1;		// delta width factor2
-				double u = m*1-0.01;	// upper endpoint curvature change factor
-
-				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw2, 90,new double[]{1,1,1,1,1-u,1-u,1+u,1+u},new double[]{0,-l[0]*8/2}));	// top  -- sharpens curvature
-				limbs.add(new LimbSpec( 0,l[1]*4,w/dw,180,curv));																	// j, bottom   
-				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));																// j. lower left  -- broaden curvature	
-			
-			} else {
+//			if (doMorph) {
+//				
+//				double dw = m/2+1; 		// delta width factor
+//				double dw2 = m/1+1;		// delta width factor2
+//				double u = m*1-0.01;	// upper endpoint curvature change factor
+//
+//				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw2, 90,new double[]{1,1,1,1,1-u,1-u,1+u,1+u},new double[]{0,-l[0]*8/2}));	// top  -- sharpens curvature
+//				limbs.add(new LimbSpec( 0,l[1]*4,w/dw,180,curv));																	// j, bottom   
+//				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));																// j. lower left  -- broaden curvature	
+//			
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*8,w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,180,curv));
 				limbs.add(new LimbSpec( 2,l[2]*2,w, 90,curv));
-			}
+//			}
 			break;
 			
 		
@@ -2603,7 +2603,7 @@ public class BsplineObject implements Drawable {
 		
 		case downL_h:		// #8
 
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				double dw = m/2+1; 	// delta width factor; or for more changes at joints: dw = m/1+1;
 //				double lr = m*1;	// lower right curvature change factor
@@ -2614,18 +2614,18 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 0,l[3]*4,w/dw, 90,curv));									// ul joint 	-- pinch
 //				limbs.add(new LimbSpec( 4,l[4]*3,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));		// upper left 	-- broadens curvature (by increasing width only)			
 
-			} else { // exemplar
+//			} else { // exemplar
 				limbs.add(new LimbSpec(-1,l[0]*4,w,  0,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[2]*4,w,270,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w, 90,curv));
 				limbs.add(new LimbSpec( 4,l[4]*3,w,  0,curv));
-			}		
+//			}		
 			break;
 
 		case I_h:			// #9
 
-			if (doMorph) {
+//			if (doMorph) {
 
 //				double dw = m/2+1; 	// delta width factor
 //				double lr = m*1;	// lower right curvature change factor
@@ -2639,17 +2639,17 @@ public class BsplineObject implements Drawable {
 ////				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*4,1+m*4,1+m*6,1+m*6},true));
 //				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*3,2,1,1},true));
 			
-			} else {
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*4,w,  0,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[2]*4,w,270,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w, 90,curv));
-			}
+//			}
 			break;
 
 		case SEVEN_downT:	// #10
 
-			if (doMorph) {
+//			if (doMorph) {
 
 //				double dw = m/2+1; 		// delta width factor
 ////				double dw2 = m/1+1; 	// delta width factor2
@@ -2660,18 +2660,18 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 0,l[2]*3,w*dw,180,curv));									// lower left   -- broadens curvature
 //				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- shaprens curvature			
 				
-			} else {
+//			} else {
 				//yPos = yPos-l[0]*8/2;	// don't change xPos, yPos as those are only used in drawing routines
 				limbs.add(new LimbSpec(-1,l[0]*8,  w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*3,  w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,  w,180,curv));
 				limbs.add(new LimbSpec( 1,l[3]*3,w,180,curv));			
-			}
+//			}
 			break;
 
 		case Y_downT:		// #11
 
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				//double dw = m/2+1; 	// delta width factor
 //				double dw2 = m/1+1;		// delta width factor2
@@ -2682,19 +2682,19 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));										// lower right 	
 //				limbs.add(new LimbSpec( 0,l[2]*3,w+m*2,180,new double[]{1+ll,1+ll,1+ll,1+ll}));		// lower left   -- broadens curvature
 								
-			} else {
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*7,  w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*3,  w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,  w,180,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
 				limbs.add(new LimbSpec( 1,l[5]*4,w,135,curv));
-			}
+//			}
 			break;
 
 		case downL_t:		// #12
 
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				double dw = m/2+1; 	// delta width factor
 //				double lr = m*1;	// lower right curvature change factor
@@ -2707,18 +2707,18 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 0,l[3]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower down   -- sharpens curvature
 //				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature		
 				
-			} else {
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*4,w, 90,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w,  0,curv));
-			}
+//			}
 			break;
 
 		case I_t:			// #13
 
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				double dw = m/2+1; 	// delta width factor
 //				double lr = m*1;	// lower right curvature change factor
@@ -2732,17 +2732,17 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
 //				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,135,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature
 				
-			} else {
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*4,w, 90,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w,270,curv));
-			}
+//			}
 			break;
 
 		case SEVEN_J:		// #14
 			
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				double dw = m/2+1; 		// delta width factor
 //				double dw2 = m/1+1; 	// delta width factor2
@@ -2753,18 +2753,18 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));									// j. lower left  -- broaden curvature
 //				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- sharpens curvature
 				
-			} else {
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*8,w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,180,curv));
 				limbs.add(new LimbSpec( 2,l[2]*2,w, 90,curv));
 				limbs.add(new LimbSpec( 1,l[3]*3,w,180,curv));	
-			}
+//			}
 			break;
 
 		case Y_J:			// #15
 
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				double dw = m/2+1; 		// delta width factor
 //				double dw2 = m/1+1;		// delta width factor2
@@ -2774,18 +2774,18 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 0,l[1]*4,w/dw,180,curv));																	// j, bottom   
 //				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));																// j. lower left  -- broaden curvature	
 			
-			} else {
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*7,w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,180,curv));
 				limbs.add(new LimbSpec( 2,l[2]*2,w, 90,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w,135,curv));
-			}
+//			}
 			break;
 		case SEVEN_h_ud:		// #16
 			rotateFlag = true;
-			if (doMorph) {
+//			if (doMorph) {
 				
 				double dw = m/2+1; 	// delta width factor; or for more changes at joints: dw = m/1+1;
 				double lr = m*1;	// lower right curvature change factor
@@ -2796,185 +2796,185 @@ public class BsplineObject implements Drawable {
 				limbs.add(new LimbSpec( 0,l[3]*4,w/dw, 90,curv));									// ul joint 	-- pinch
 				limbs.add(new LimbSpec( 4,l[4]*3,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));		// upper left 	-- broadens curvature (by increasing width only)			
 
-			} else { // exemplar
+//			} else { // exemplar
 				limbs.add(new LimbSpec(-1,l[0]*4,w,  0,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[2]*4,w,270,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w, 90,curv));
 				limbs.add(new LimbSpec( 4,l[4]*3,w,180,curv));
-			}		
+//			}		
 			break;
 
 		case Y_h_ud:		// #17
 			rotateFlag = true;
 
-			if (doMorph) {
+//			if (doMorph) {
 
-				double dw = m/2+1; 	// delta width factor
-				double lr = m*1;	// lower right curvature change factor
-				double ul = m*0;	// upper left curvature change factor
-				limbs.add(new LimbSpec(-1,l[0]*4,w,w*dw,  0,curv1st)); 								// lr joint 	-- bulge	[maybe change ori slightly (to counter medial-axis change?): (ori +5*m)]
-				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));										// lower left
-				limbs.add(new LimbSpec( 1,l[2]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));			// lower right 	-- sharpens curvature and slightly lengthens end
-				limbs.add(new LimbSpec( 0,l[3]*3,w/dw, 90,curv));									// ul joint 	-- pinch
-				limbs.add(new LimbSpec( 4,l[4]*4,w, 45,curv));										// upper right
-				limbs.add(new LimbSpec( 4,l[5]*4,w+m*2,135,new double[]{1+ul,1+ul,1+ul,1+ul}));		// upper left 	-- broadens curvature (by increasing width only)
-//				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*4,1+m*4,1+m*6,1+m*6},true));
-//				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*3,2,1,1},true));
-			
-			} else {
+//				double dw = m/2+1; 	// delta width factor
+//				double lr = m*1;	// lower right curvature change factor
+//				double ul = m*0;	// upper left curvature change factor
+//				limbs.add(new LimbSpec(-1,l[0]*4,w,w*dw,  0,curv1st)); 								// lr joint 	-- bulge	[maybe change ori slightly (to counter medial-axis change?): (ori +5*m)]
+//				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));										// lower left
+//				limbs.add(new LimbSpec( 1,l[2]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));			// lower right 	-- sharpens curvature and slightly lengthens end
+//				limbs.add(new LimbSpec( 0,l[3]*3,w/dw, 90,curv));									// ul joint 	-- pinch
+//				limbs.add(new LimbSpec( 4,l[4]*4,w, 45,curv));										// upper right
+//				limbs.add(new LimbSpec( 4,l[5]*4,w+m*2,135,new double[]{1+ul,1+ul,1+ul,1+ul}));		// upper left 	-- broadens curvature (by increasing width only)
+////				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*4,1+m*4,1+m*6,1+m*6},true));
+////				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*3,2,1,1},true));
+//			
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*4,w,  0,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[2]*4,w,270,curv));
 				limbs.add(new LimbSpec( 0,l[3]*3,w, 90,curv));
 				limbs.add(new LimbSpec( 4,l[4]*4,w, 45,curv));
 				limbs.add(new LimbSpec( 4,l[5]*4,w,135,curv));
-			}
+//			}
 			break;
 
 		case downL_downT_ud:		// #18
 			rotateFlag = true;
 
-			if (doMorph) {
-
-				double dw = m/2+1; 		// delta width factor
-//				double dw2 = m/1+1; 	// delta width factor2
-				double ur = m*1-0.01;	// upper right curvature change factor
-
-				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw, 90,curv1st,new double[]{0,-l[0]*8/2}));	// ur joint 	-- bulge; ll joint  -- pinch
-				limbs.add(new LimbSpec( 0,l[1]*3,w*dw,  0,curv));									// lower right 	
-				limbs.add(new LimbSpec( 0,l[2]*3,w*dw,180,curv));									// lower left   -- broadens curvature
-				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- shaprens curvature			
-
-				// TODO: fix bottom morph, make the whole width of bottom enlarge, but keep upward branch small
-				
-			} else {
+//			if (doMorph) {
+//
+//				double dw = m/2+1; 		// delta width factor
+////				double dw2 = m/1+1; 	// delta width factor2
+//				double ur = m*1-0.01;	// upper right curvature change factor
+//
+//				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw, 90,curv1st,new double[]{0,-l[0]*8/2}));	// ur joint 	-- bulge; ll joint  -- pinch
+//				limbs.add(new LimbSpec( 0,l[1]*3,w*dw,  0,curv));									// lower right 	
+//				limbs.add(new LimbSpec( 0,l[2]*3,w*dw,180,curv));									// lower left   -- broadens curvature
+//				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- shaprens curvature			
+//
+//				// TODO: fix bottom morph, make the whole width of bottom enlarge, but keep upward branch small
+//				
+//			} else {
 				//yPos = yPos-l[0]*8/2;	// don't change xPos, yPos as those are only used in drawing routines
 				limbs.add(new LimbSpec(-1,l[0]*8,  w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*3,  w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,  w,180,curv));
 				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,curv));			
-			}
+//			}
 			break;
 
 		case I_downT_ud:		// #19
 			rotateFlag = true;
 
-			if (doMorph) {
-				
-				//double dw = m/2+1; 	// delta width factor
-				double dw2 = m/1+1;		// delta width factor2
-				double u = m*1-0.01;	// upper endpoint curvature change factor
-				double ll = m*0;	// lower left curvature change factor
-				
-				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw2, 90,new double[]{1,1,1,1,1-u,1-u,1+u,1+u},new double[]{0,-l[0]*8/2}));	// ur joint 	-- bulge; ll joint  -- pinch
-				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));										// lower right 	
-				limbs.add(new LimbSpec( 0,l[2]*3,w+m*2,180,new double[]{1+ll,1+ll,1+ll,1+ll}));		// lower left   -- broadens curvature
-				
-				// TODO: finish bottom morph (see #2 above)
-				
-			} else {
+//			if (doMorph) {
+//				
+//				//double dw = m/2+1; 	// delta width factor
+//				double dw2 = m/1+1;		// delta width factor2
+//				double u = m*1-0.01;	// upper endpoint curvature change factor
+//				double ll = m*0;	// lower left curvature change factor
+//				
+//				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw2, 90,new double[]{1,1,1,1,1-u,1-u,1+u,1+u},new double[]{0,-l[0]*8/2}));	// ur joint 	-- bulge; ll joint  -- pinch
+//				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));										// lower right 	
+//				limbs.add(new LimbSpec( 0,l[2]*3,w+m*2,180,new double[]{1+ll,1+ll,1+ll,1+ll}));		// lower left   -- broadens curvature
+//				
+//				// TODO: finish bottom morph (see #2 above)
+//				
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*8,  w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*3,  w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,  w,180,curv));
-			}
+//			}
 			break;
 
 		case SEVEN_t_ud:		// #20
 			rotateFlag = true;
 
-			if (doMorph) {
-				
-				double dw = m/2+1; 	// delta width factor
-				double lr = m*1;	// lower right curvature change factor
-				double ul = m*0;	// upper left curvature change factor
-			
-				limbs.add(new LimbSpec(-1,l[0]*4,w*dw,w/dw, 90,curv1st));								// lr and ul joint	-- pinch & bulge
-//				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower right	-- sharpens curvature
-				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));											// lower right	
-				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
-				limbs.add(new LimbSpec( 0,l[3]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower down   -- sharpens curvature
-				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature		
-				
-			} else {
+//			if (doMorph) {
+//				
+//				double dw = m/2+1; 	// delta width factor
+//				double lr = m*1;	// lower right curvature change factor
+//				double ul = m*0;	// upper left curvature change factor
+//			
+//				limbs.add(new LimbSpec(-1,l[0]*4,w*dw,w/dw, 90,curv1st));								// lr and ul joint	-- pinch & bulge
+////				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower right	-- sharpens curvature
+//				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));											// lower right	
+//				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
+//				limbs.add(new LimbSpec( 0,l[3]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower down   -- sharpens curvature
+//				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature		
+//				
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*4,w, 90,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w,180,curv));
-			}
+//			}
 			break;
 
 		case Y_t_ud:		// #21
 			rotateFlag = true;
 
-			if (doMorph) {
-				
-				double dw = m/2+1; 	// delta width factor
-				double lr = m*1;	// lower right curvature change factor
-				double ul = m*0;	// upper left curvature change factor
-			
-				limbs.add(new LimbSpec(-1,l[0]*3,w*dw,w/dw, 90,curv1st));								// lr and ul joint	-- pinch & bulge
-//				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower right	-- sharpens curvature
-				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));											// lower right	
-				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
-				limbs.add(new LimbSpec( 0,l[3]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower down   -- sharpens curvature
-				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
-				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,135,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature
-				
-			} else {
+//			if (doMorph) {
+//				
+//				double dw = m/2+1; 	// delta width factor
+//				double lr = m*1;	// lower right curvature change factor
+//				double ul = m*0;	// upper left curvature change factor
+//			
+//				limbs.add(new LimbSpec(-1,l[0]*3,w*dw,w/dw, 90,curv1st));								// lr and ul joint	-- pinch & bulge
+////				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower right	-- sharpens curvature
+//				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));											// lower right	
+//				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
+//				limbs.add(new LimbSpec( 0,l[3]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower down   -- sharpens curvature
+//				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
+//				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,135,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature
+//				
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*3,w, 90,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w,135,curv));
-			}
+//			}
 			break;
 
 		case downL_J_ud:		// #22
 			rotateFlag = true;
 			
-			if (doMorph) {
-				
-				double dw = m/2+1; 		// delta width factor
-				double dw2 = m/1+1; 	// delta width factor2
-				double ur = m*1-0.01;	// upper right curvature change factor
-				
-				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw, 90,curv1st,new double[]{0,-l[0]*8/2}));	// ur joint -- bulge
-				limbs.add(new LimbSpec( 0,l[1]*4,w/dw,180,curv));									// j, lower left  -- pinch 
-				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));									// j. lower left  -- broaden curvature
-				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- sharpens curvature
-				
-			} else {
+//			if (doMorph) {
+//				
+//				double dw = m/2+1; 		// delta width factor
+//				double dw2 = m/1+1; 	// delta width factor2
+//				double ur = m*1-0.01;	// upper right curvature change factor
+//				
+//				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw, 90,curv1st,new double[]{0,-l[0]*8/2}));	// ur joint -- bulge
+//				limbs.add(new LimbSpec( 0,l[1]*4,w/dw,180,curv));									// j, lower left  -- pinch 
+//				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));									// j. lower left  -- broaden curvature
+//				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- sharpens curvature
+//				
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*8,w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,180,curv));
 				limbs.add(new LimbSpec( 2,l[2]*2,w, 90,curv));
 				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,curv));	
-			}
+//			}
 			break;
 
 		case I_J_ud:		// #23
 			rotateFlag = true;
 
-			if (doMorph) {
-				
-				double dw = m/2+1; 		// delta width factor
-				double dw2 = m/1+1;		// delta width factor2
-				double u = m*1-0.01;	// upper endpoint curvature change factor
-
-				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw2, 90,new double[]{1,1,1,1,1-u,1-u,1+u,1+u},new double[]{0,-l[0]*8/2}));	// top  -- sharpens curvature
-				limbs.add(new LimbSpec( 0,l[1]*4,w/dw,180,curv));																	// j, bottom   
-				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));																// j. lower left  -- broaden curvature	
-			
-			} else {
+//			if (doMorph) {
+//				
+//				double dw = m/2+1; 		// delta width factor
+//				double dw2 = m/1+1;		// delta width factor2
+//				double u = m*1-0.01;	// upper endpoint curvature change factor
+//
+//				limbs.add(new LimbSpec(-1,l[0]*8,w,w*dw2, 90,new double[]{1,1,1,1,1-u,1-u,1+u,1+u},new double[]{0,-l[0]*8/2}));	// top  -- sharpens curvature
+//				limbs.add(new LimbSpec( 0,l[1]*4,w/dw,180,curv));																	// j, bottom   
+//				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));																// j. lower left  -- broaden curvature	
+//			
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*8,w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,180,curv));
 				limbs.add(new LimbSpec( 2,l[2]*2,w, 90,curv));
-			}
+//			}
 			break;
 			
 		
@@ -2984,7 +2984,7 @@ public class BsplineObject implements Drawable {
 		case downL_h_ud:		// #24
 			rotateFlag = true;
 
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				double dw = m/2+1; 	// delta width factor; or for more changes at joints: dw = m/1+1;
 //				double lr = m*1;	// lower right curvature change factor
@@ -2995,19 +2995,19 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 0,l[3]*4,w/dw, 90,curv));									// ul joint 	-- pinch
 //				limbs.add(new LimbSpec( 4,l[4]*3,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));		// upper left 	-- broadens curvature (by increasing width only)			
 
-			} else { // exemplar
+//			} else { // exemplar
 				limbs.add(new LimbSpec(-1,l[0]*4,w,  0,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[2]*4,w,270,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w, 90,curv));
 				limbs.add(new LimbSpec( 4,l[4]*3,w,  0,curv));
-			}		
+//			}		
 			break;
 
 		case I_h_ud:		// #25
 			rotateFlag = true;
 
-			if (doMorph) {
+//			if (doMorph) {
 
 //				double dw = m/2+1; 	// delta width factor
 //				double lr = m*1;	// lower right curvature change factor
@@ -3021,18 +3021,18 @@ public class BsplineObject implements Drawable {
 ////				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*4,1+m*4,1+m*6,1+m*6},true));
 //				limbs.add(new LimbSpec( 4,l[5]*4,w,135,new double[]{1+m*3,2,1,1},true));
 			
-			} else {
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*4,w,  0,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[2]*4,w,270,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w, 90,curv));
-			}
+//			}
 			break;
 
 		case SEVEN_downT_ud:		// #26
 			rotateFlag = true;
 
-			if (doMorph) {
+//			if (doMorph) {
 
 //				double dw = m/2+1; 		// delta width factor
 ////				double dw2 = m/1+1; 	// delta width factor2
@@ -3043,19 +3043,19 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 0,l[2]*3,w*dw,180,curv));									// lower left   -- broadens curvature
 //				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- shaprens curvature			
 				
-			} else {
+//			} else {
 				//yPos = yPos-l[0]*8/2;	// don't change xPos, yPos as those are only used in drawing routines
 				limbs.add(new LimbSpec(-1,l[0]*8,  w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*3,  w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,  w,180,curv));
 				limbs.add(new LimbSpec( 1,l[3]*3,w,180,curv));			
-			}
+//			}
 			break;
 
 		case Y_downT_ud:		// #27
 			rotateFlag = true;
 
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				//double dw = m/2+1; 	// delta width factor
 //				double dw2 = m/1+1;		// delta width factor2
@@ -3066,20 +3066,20 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));										// lower right 	
 //				limbs.add(new LimbSpec( 0,l[2]*3,w+m*2,180,new double[]{1+ll,1+ll,1+ll,1+ll}));		// lower left   -- broadens curvature
 								
-			} else {
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*7,  w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*3,  w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,  w,180,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
 				limbs.add(new LimbSpec( 1,l[5]*4,w,135,curv));
-			}
+//			}
 			break;
 
 		case downL_t_ud:		// #28
 			rotateFlag = true;
 
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				double dw = m/2+1; 	// delta width factor
 //				double lr = m*1;	// lower right curvature change factor
@@ -3092,19 +3092,19 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 0,l[3]*4,w,270,new double[]{1-lr,1-lr,1+lr,1+lr}));				// lower down   -- sharpens curvature
 //				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,180,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature		
 				
-			} else {
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*4,w, 90,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w,270,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w,  0,curv));
-			}
+//			}
 			break;
 
 		case I_t_ud:		// #29
 			rotateFlag = true;
 
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				double dw = m/2+1; 	// delta width factor
 //				double lr = m*1;	// lower right curvature change factor
@@ -3118,18 +3118,18 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
 //				limbs.add(new LimbSpec( 1,l[4]*4,w+m*2,135,new double[]{1+ul,1+ul,1+ul,1+ul}));			// upper left	-- broadens curvature
 				
-			} else {
+//			} else {
 				limbs.add(new LimbSpec(-1,l[0]*4,w, 90,curv1st));
 				limbs.add(new LimbSpec( 0,l[1]*3,w,  0,curv));
 				limbs.add(new LimbSpec( 0,l[2]*3,w,180,curv));
 				limbs.add(new LimbSpec( 0,l[3]*4,w,270,curv));
-			}
+//			}
 			break;
 
 		case SEVEN_J_ud:		// #30
 			rotateFlag = true;
 			
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				double dw = m/2+1; 		// delta width factor
 //				double dw2 = m/1+1; 	// delta width factor2
@@ -3140,19 +3140,19 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));									// j. lower left  -- broaden curvature
 //				limbs.add(new LimbSpec( 1,l[3]*3,w,  0,new double[]{1-ur,1-ur,1+ur,1+ur}));			// upper right  -- sharpens curvature
 				
-			} else {
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*8,w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,180,curv));
 				limbs.add(new LimbSpec( 2,l[2]*2,w, 90,curv));
 				limbs.add(new LimbSpec( 1,l[3]*3,w,180,curv));	
-			}
+//			}
 			break;
 
 		case Y_J_ud:			// #31
 			rotateFlag = true;
 
-			if (doMorph) {
+//			if (doMorph) {
 				
 //				double dw = m/2+1; 		// delta width factor
 //				double dw2 = m/1+1;		// delta width factor2
@@ -3162,14 +3162,14 @@ public class BsplineObject implements Drawable {
 //				limbs.add(new LimbSpec( 0,l[1]*4,w/dw,180,curv));																	// j, bottom   
 //				limbs.add(new LimbSpec( 2,l[2]*2,w*dw2, 90,curv));																// j. lower left  -- broaden curvature	
 			
-			} else {
+//			} else {
 				//yPos = yPos-l[0]*8/2;
 				limbs.add(new LimbSpec(-1,l[0]*7,w, 90,curv1st,new double[]{0,-l[0]*8/2}));
 				limbs.add(new LimbSpec( 0,l[1]*4,w,180,curv));
 				limbs.add(new LimbSpec( 2,l[2]*2,w, 90,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w, 45,curv));
 				limbs.add(new LimbSpec( 1,l[4]*4,w,135,curv));
-			}
+//			}
 			break;
 
 // JK 2 May 2016 - added 2 new canonical shapes		

@@ -71,7 +71,7 @@ public class DrawingManager implements Drawable {
 			GL11.glClearColor(defaultBackColor.getRed(),defaultBackColor.getGreen(),defaultBackColor.getBlue(),1);
 			
 			renderer.draw(this);
-			pngMaker.saveImage(stimObjIds.get(stimCounter),height,width, imageFolderName);
+//			pngMaker.saveImage(stimObjIds.get(stimCounter),height,width, imageFolderName);
 			window.swapBuffers();
 			try {
 				Thread.sleep(1000);

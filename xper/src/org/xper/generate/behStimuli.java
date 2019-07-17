@@ -18,7 +18,7 @@ public class behStimuli {
 			5. doCenter:
 			6. contrast:
 			7. doSaveSpec:
-			8. TEMP:
+			8. doMorph:
 			9-11. foreColor:
 			12-14. backColor:
 		*/
@@ -51,6 +51,11 @@ public class behStimuli {
 			objs.get(i).setContrast(contrast);
 
 			objs.get(i).setDoMorph(doMorph);
+			if (doMorph) {
+				objs.get(i).getSpec().setMorphLengthGain(1.0);
+				objs.get(i).getSpec().setMorphWidthGain(1.0);
+				objs.get(i).getSpec().setMorphBias(0.0);
+			}
 			objs.get(i).setStimCat(category);
 			objs.get(i).createObj();
 			

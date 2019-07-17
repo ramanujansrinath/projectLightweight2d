@@ -317,7 +317,11 @@ public class SachMathUtil {
 		// pdf of x: p(x) = 1 + b*(2x-1)
 		// cdf of x: P(x) = b*x^2 + (1-b)*x
 		// recover x via inverse of cdf: x = ( (b-1) + sqrt((b-1)^2 + 4bu) ) / (2b) 
-		double x = ((bias-1) + Math.pow(Math.pow(bias-1,2) + 4*bias*u,.5))/bias/2;
+		double x;
+		if (bias>0)
+			x = ((bias-1) + Math.pow(Math.pow(bias-1,2) + 4*bias*u,.5))/bias/2;
+		else
+			x = u;
 		
 		// transpose x~[0,1] into [ctr,vMax] or [vMin,ctr]
 		if (isGenSideLow) {
