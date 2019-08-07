@@ -3519,41 +3519,46 @@ public class BsplineObject implements Drawable {
     }
 	
 	public void writeInfo2File(String folderPath, long id) {
-		/*
-		String outStr = vecToStr(objCtrlPts);
-	    try {
-	    		BufferedWriter out = new BufferedWriter(new FileWriter(folderPath + "/" + id + "_ctrlPts.txt"));
-	        
-	        out.write(  outStr);
-	        out.flush();
-	        out.close();
-	    } catch (Exception e) { 
-    			System.out.println(e);
-		}
-	    */
-		
-	    this.spec.setCtrlPts(objCtrlPts);
-	    String outStr = this.spec.toXml();
+		this.spec.setCtrlPts(objCtrlPts);
+		String outStr = this.spec.toXml();
+	    
 	    try {
 	    	BufferedWriter out = new BufferedWriter(new FileWriter(folderPath + "/" + id + "_spec.xml"));
 	        
 	        out.write(  outStr);
 	        out.flush();
 	        out.close();
+	        	        
 	    } catch (Exception e) { 
-	        	System.out.println(e);
-	    	}
+        	System.out.println(e);
+    	}
+		
+	    outStr = vecToStr(this.spline.bpt);
+	    try {
+    		BufferedWriter out = new BufferedWriter(new FileWriter(folderPath + "/" + id + "_densePts.txt"));
+	        
+	        out.write(  outStr);
+	        out.flush();
+	        out.close();
+	    } catch (Exception e) { 
+			System.out.println(e);
+		}
+	    
+		
+	    
 
 	}
 	
-//	private String vecToStr(double[][] pts) {
-//		String str = new String();
-//		for(int i=0; i<pts.length; i++) {
-//			str = str + pts[i][0] + "," + pts[i][1] + "\n";
-//		}
-//		return str;
-//	}
-//	
+	private String vecToStr(MyPoint[] pts) {
+		String str = new String();
+		int i = 0;
+		while(pts[i]!=null){
+			str = str + pts[i].x + "," + pts[i].y + "\n";
+			i++;
+		}
+		return str;
+	}
+	
 	
 }
 
