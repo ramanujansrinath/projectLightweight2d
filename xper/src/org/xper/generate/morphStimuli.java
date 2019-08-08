@@ -22,6 +22,7 @@ public class morphStimuli {
 		
 		String folderPath = "";
 		int obj_counter=0;
+		boolean doSaveImage = false;
         for (String line = br.readLine(); line != null; line = br.readLine()) {
             String[] args = line.split(";"); 	        
 
@@ -33,7 +34,7 @@ public class morphStimuli {
 				4. doCenter:
 				5. contrast:
 				6. doSaveSpec:
-				7. TEMP:
+				7. doSaveImage:
 				8-10. foreColor:
 				11-13. backColor:
 			*/
@@ -45,9 +46,18 @@ public class morphStimuli {
 			boolean doCenter = Boolean.parseBoolean(args[4].trim());
 			double contrast = Double.parseDouble(args[5].trim());
 			boolean doSaveSpec = Boolean.parseBoolean(args[6].trim());
-			// 7 is a placeholder
-			RGBColor foreColor = new RGBColor(Float.parseFloat(args[ 8].trim()),Float.parseFloat(args[ 9].trim()),Float.parseFloat(args[10].trim()));
-			RGBColor backColor = new RGBColor(Float.parseFloat(args[11].trim()),Float.parseFloat(args[12].trim()),Float.parseFloat(args[13].trim()));
+			doSaveImage = Boolean.parseBoolean(args[7].trim());
+			
+			RGBColor foreColor;
+			RGBColor backColor;
+			if (doSaveImage){
+				foreColor = new RGBColor(Float.parseFloat(args[ 8]),Float.parseFloat(args[ 9]),Float.parseFloat(args[10]));
+				backColor = new RGBColor(Float.parseFloat(args[11]),Float.parseFloat(args[12]),Float.parseFloat(args[13]));
+			}
+			else{
+				foreColor = new RGBColor(1,1,1);
+				backColor = new RGBColor(0,0,0);
+			}
 			
 			ids.add(childId);
 			
@@ -71,7 +81,9 @@ public class morphStimuli {
 		fr.close();
 		br.close();
 		
-		PNGmaker pngMaker = new PNGmaker();
-		pngMaker.createAndSavePNGsfromObjs(objs, ids, folderPath);
+		if (doSaveImage){
+			PNGmaker pngMaker = new PNGmaker();
+			pngMaker.createAndSavePNGsfromObjs(objs, ids, folderPath);
+		}
 	}
 }

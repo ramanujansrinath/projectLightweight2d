@@ -17,7 +17,7 @@ public class generateStimuli {
 			4. doCenter:
 			5. contrast:
 			6. doSaveSpec:
-			7. TEMP:
+			7. doSaveImage:
 			8-10. foreColor:
 			11-13. backColor:
 		*/
@@ -30,10 +30,17 @@ public class generateStimuli {
 		boolean doCenter = Boolean.parseBoolean(args[4]);
 		double contrast = Double.parseDouble(args[5]);
 		boolean doSaveSpec = Boolean.parseBoolean(args[6]);
-		// 7 is a placeholder
-		RGBColor foreColor = new RGBColor(Float.parseFloat(args[ 8]),Float.parseFloat(args[ 9]),Float.parseFloat(args[10]));
-		RGBColor backColor = new RGBColor(Float.parseFloat(args[11]),Float.parseFloat(args[12]),Float.parseFloat(args[13]));
-		
+		boolean doSaveImage = Boolean.parseBoolean(args[7]);
+		RGBColor foreColor;
+		RGBColor backColor;
+		if (doSaveImage){
+			foreColor = new RGBColor(Float.parseFloat(args[ 8]),Float.parseFloat(args[ 9]),Float.parseFloat(args[10]));
+			backColor = new RGBColor(Float.parseFloat(args[11]),Float.parseFloat(args[12]),Float.parseFloat(args[13]));
+		}
+		else{
+			foreColor = new RGBColor(1,1,1);
+			backColor = new RGBColor(0,0,0);
+		}
 		List<Long> ids = new ArrayList<Long>();
 		List<BsplineObject> objs = new ArrayList<BsplineObject>();
 
@@ -56,7 +63,9 @@ public class generateStimuli {
 			}
 		}
 		// make all the images
-		PNGmaker pngMaker = new PNGmaker();
-		pngMaker.createAndSavePNGsfromObjs(objs, ids, folderPath);
+		if (doSaveImage){
+			PNGmaker pngMaker = new PNGmaker();
+			pngMaker.createAndSavePNGsfromObjs(objs, ids, folderPath);
+		}
 	}
 }

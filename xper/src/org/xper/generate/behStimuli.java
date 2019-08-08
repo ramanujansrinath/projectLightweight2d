@@ -17,10 +17,11 @@ public class behStimuli {
 			4. size:
 			5. doCenter:
 			6. contrast:
-			7. doSaveSpec:
-			8. doMorph:
-			9-11. foreColor:
-			12-14. backColor:
+			7. doMorph:
+			8. doSaveSpec:
+			9. doSaveImage;
+			10-12. foreColor:
+			13-15. backColor:
 		*/
 
 		// parse args
@@ -31,10 +32,20 @@ public class behStimuli {
 		double size = Double.parseDouble(args[4]);
 		boolean doCenter = Boolean.parseBoolean(args[5]);
 		double contrast = Double.parseDouble(args[6]);
-		boolean doSaveSpec = Boolean.parseBoolean(args[7]);
-		boolean doMorph = Boolean.parseBoolean(args[8]);
-		RGBColor foreColor = new RGBColor(Float.parseFloat(args[ 9]),Float.parseFloat(args[10]),Float.parseFloat(args[11]));
-		RGBColor backColor = new RGBColor(Float.parseFloat(args[12]),Float.parseFloat(args[13]),Float.parseFloat(args[14]));
+		boolean doMorph = Boolean.parseBoolean(args[7]);
+		boolean doSaveSpec = Boolean.parseBoolean(args[8]);
+		boolean doSaveImage = Boolean.parseBoolean(args[9]);
+		
+		RGBColor foreColor;
+		RGBColor backColor;
+		if (doSaveImage){
+			foreColor = new RGBColor(Float.parseFloat(args[10]),Float.parseFloat(args[11]),Float.parseFloat(args[12]));
+			backColor = new RGBColor(Float.parseFloat(args[13]),Float.parseFloat(args[14]),Float.parseFloat(args[15]));
+		}
+		else{
+			foreColor = new RGBColor(1,1,1);
+			backColor = new RGBColor(0,0,0);
+		}
 		
 		List<Long> ids = new ArrayList<Long>();
 		List<BsplineObject> objs = new ArrayList<BsplineObject>();
@@ -69,7 +80,9 @@ public class behStimuli {
 			}
 		}
 		// make all the images
-		PNGmaker pngMaker = new PNGmaker();
-		pngMaker.createAndSavePNGsfromObjs(objs, ids, folderPath);
+		if (doSaveImage){
+			PNGmaker pngMaker = new PNGmaker();
+			pngMaker.createAndSavePNGsfromObjs(objs, ids, folderPath);
+		}
 	}
 }
