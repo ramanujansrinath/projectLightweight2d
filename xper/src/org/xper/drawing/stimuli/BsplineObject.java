@@ -3545,7 +3545,7 @@ public class BsplineObject implements Drawable {
 	    	if (this.doCenterObject)
 	    		fileStr = fileStr + ".txt";
 	    	else
-	    		fileStr = fileStr + "unCentered.txt";
+	    		fileStr = fileStr + "UnCentered.txt";
 	    	
     		BufferedWriter out = new BufferedWriter(new FileWriter(fileStr));
 	        
