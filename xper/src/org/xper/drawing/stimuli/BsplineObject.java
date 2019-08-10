@@ -3521,9 +3521,15 @@ public class BsplineObject implements Drawable {
 	public void writeInfo2File(String folderPath, long id) {
 		this.spec.setCtrlPts(objCtrlPts);
 		String outStr = this.spec.toXml();
-	    
+	    String fileStr = "";
 	    try {
-	    	BufferedWriter out = new BufferedWriter(new FileWriter(folderPath + "/" + id + "_spec.xml"));
+	    	fileStr = folderPath + "/" + id + "_spec";
+	    	if (this.doCenterObject)
+	    		fileStr = fileStr + ".xml";
+	    	else
+	    		fileStr = fileStr + "unCentered.xml";
+	    	
+	    	BufferedWriter out = new BufferedWriter(new FileWriter(fileStr));
 	        
 	        out.write(  outStr);
 	        out.flush();
@@ -3535,7 +3541,13 @@ public class BsplineObject implements Drawable {
 		
 	    outStr = vecToStr(this.spline.bpt);
 	    try {
-    		BufferedWriter out = new BufferedWriter(new FileWriter(folderPath + "/" + id + "_densePts.txt"));
+	    	fileStr = folderPath + "/" + id + "_densePts";
+	    	if (this.doCenterObject)
+	    		fileStr = fileStr + ".txt";
+	    	else
+	    		fileStr = fileStr + "unCentered.txt";
+	    	
+    		BufferedWriter out = new BufferedWriter(new FileWriter(fileStr));
 	        
 	        out.write(  outStr);
 	        out.flush();
