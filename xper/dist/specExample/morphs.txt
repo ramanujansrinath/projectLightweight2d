@@ -1,0 +1,1 @@
+dist\specExample\;33;80;10;True;1;True;False;0.7;0.7;0.7;0.3;0.3;0.3

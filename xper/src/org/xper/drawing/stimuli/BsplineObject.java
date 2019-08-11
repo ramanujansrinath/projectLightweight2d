@@ -3524,10 +3524,10 @@ public class BsplineObject implements Drawable {
 	    String fileStr = "";
 	    try {
 	    	fileStr = folderPath + "/" + id + "_spec";
-	    	if (this.doCenterObject)
+//	    	if (this.doCenterObject)
 	    		fileStr = fileStr + ".xml";
-	    	else
-	    		fileStr = fileStr + "unCentered.xml";
+//	    	else
+//	    		fileStr = fileStr + "UnCentered.xml";
 	    	
 	    	BufferedWriter out = new BufferedWriter(new FileWriter(fileStr));
 	        
@@ -3542,10 +3542,10 @@ public class BsplineObject implements Drawable {
 	    outStr = vecToStr(this.spline.bpt);
 	    try {
 	    	fileStr = folderPath + "/" + id + "_densePts";
-	    	if (this.doCenterObject)
+//	    	if (this.doCenterObject)
 	    		fileStr = fileStr + ".txt";
-	    	else
-	    		fileStr = fileStr + "UnCentered.txt";
+//	    	else
+//	    		fileStr = fileStr + "UnCentered.txt";
 	    	
     		BufferedWriter out = new BufferedWriter(new FileWriter(fileStr));
 	        

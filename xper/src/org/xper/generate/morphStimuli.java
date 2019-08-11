@@ -31,7 +31,7 @@ public class morphStimuli {
 				1. parentId:
 				2. childId:
 				3. size:
-				4. doCenter: AWC 8/10/2019: THIS IS A DUMMY INPUT NOW
+				4. doCenter:
 				5. contrast:
 				6. doSaveSpec:
 				7. doSaveImage:
@@ -43,7 +43,7 @@ public class morphStimuli {
             long parentId = Long.parseLong(args[1].trim());
 			long childId = Long.parseLong(args[2].trim());
 			double size = Double.parseDouble(args[3].trim());
-//			boolean doCenter = Boolean.parseBoolean(args[4].trim());
+			boolean doCenter = Boolean.parseBoolean(args[4].trim());
 			double contrast = Double.parseDouble(args[5].trim());
 			boolean doSaveSpec = Boolean.parseBoolean(args[6].trim());
 			doSaveImage = Boolean.parseBoolean(args[7].trim());
@@ -65,23 +65,24 @@ public class morphStimuli {
 			objs.add(new BsplineObject());
 			objs.get(obj_counter).setSize(size);
 			objs.get(obj_counter).setContrast(contrast);
-			objs.get(obj_counter).setDoCenterObj(true);
+			objs.get(obj_counter).setDoCenterObj(doCenter);
 			objs.get(obj_counter).setColor(foreColor);
 			objs.get(obj_counter).setBackColor(backColor);
 			
 			objs.get(obj_counter).genShapeFromFile(folderPath,parentId);
-			objs.get(obj_counter).setDoMorph(false);
+			objs.get(obj_counter).setDoMorph(true);
 			objs.get(obj_counter).createObj();
 				
 			if (doSaveSpec) {
 				objs.get(obj_counter).writeInfo2File(folderPath, childId);
 			}
 			
-			objs.get(obj_counter).setDoMorph(true);
-			objs.get(obj_counter).createObj();
-			if (doSaveSpec) {
-				objs.get(obj_counter).writeInfo2File(folderPath, childId);
-			}
+//			objs.get(obj_counter).setDoCenterObj(true);
+//			objs.get(obj_counter).setDoMorph(false);
+//			objs.get(obj_counter).createObj();
+//			if (doSaveSpec) {
+//				objs.get(obj_counter).writeInfo2File(folderPath, childId);
+//			}
 			
 			obj_counter++;
 			
