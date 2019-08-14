@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 //import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.lwjgl.opengl.GL11;
@@ -184,7 +185,7 @@ public class BsplineObject implements Drawable {
 				break;
 				
 			case GA:
-				
+				// Called in generate_morphs.m ==> generateStimuli.java
 				createRandObj();		// create random obj
 				break;
 				
@@ -293,7 +294,7 @@ public class BsplineObject implements Drawable {
 		createObjFromSpec();	// creates obj from limbs
 	}
 	
-	void createRandObj() {
+	long createRandObj() {
 		// **use this to create randomly generated spline objects for the GA**
 		
 		//-- generate multi-limb object
@@ -301,17 +302,19 @@ public class BsplineObject implements Drawable {
 		//- generate random specs:	
 			// biased number of limbs:     // 0, 1, 2, 3, 4, 5, 6, 7, 8	
 		double[] numLimbProps = new double[]{ 0, 5,10,15,15,15,15, 0, 0 }; 			// proportions for each # of limbs
-		BiasRandom br = new BiasRandom(numLimbProps);
+		BiasRandom br = new BiasRandom(this.spec.rng,numLimbProps);
 		int limbsToMake = br.selectEvent();
 //		int limbsToMake = SachMathUtil.randRange(lim_maxNumLimbs,lim_minNumLimbs);	// rand # limbs between minNumLimbs and maxNumLimbs
 
-		double l = SachMathUtil.randRange(lim_maxLength,lim_minLength);				// random lengths
-		double w = SachMathUtil.randRange(lim_maxWidth,lim_minWidth);				// random widths
-		double w2 = SachMathUtil.randRange(lim_maxWidth,lim_minWidth);				// random second width
-		double ori = SachMathUtil.randRange(lim_maxOri,lim_minOri);					// random oris
-		double[] curv = SachMathUtil.randRange(lim_maxCurv,lim_minCurv,8);			// random curvature
-		boolean isSmoother = SachMathUtil.randBoolean(lim_propSmoothNodes);			// randomly choose where to represent each node with 4 or 3 control points (less = more smooth) [make isSmoother (3vs4 ctrl pt node) contingent on how many limbs will be created?]
-		boolean isSmoother2 = SachMathUtil.randBoolean(lim_propSmoothNodes);
+		SachMathUtil s = new SachMathUtil(); 
+		s.setSeed(br.nextSeed());
+		double l = s.randRange(lim_maxLength,lim_minLength);				// random lengths
+		double w = s.randRange(lim_maxWidth,lim_minWidth);				// random widths
+		double w2 = s.randRange(lim_maxWidth,lim_minWidth);				// random second width
+		double ori = s.randRange(lim_maxOri,lim_minOri);					// random oris
+		double[] curv = s.randRange(lim_maxCurv,lim_minCurv,8);			// random curvature
+		boolean isSmoother = s.randBoolean(lim_propSmoothNodes);			// randomly choose where to represent each node with 4 or 3 control points (less = more smooth) [make isSmoother (3vs4 ctrl pt node) contingent on how many limbs will be created?]
+		boolean isSmoother2 = s.randBoolean(lim_propSmoothNodes);
 		
 		//- first limb:
 
@@ -320,27 +323,30 @@ public class BsplineObject implements Drawable {
 
 		//- additional limbs:
 		for (int n=1;n<limbsToMake;n++) {
-			int nodeID = nodeIdChooser();											// random node 			
+			int nodeID = nodeIdChooser(s.getNextSeed());											// random node 			
 			//int nodeID = SachMathUtil.randRange(numNodes-1,0);					// random node 
-			if (!addRandomLimb(nodeID)) n--;										// try limb add, if it fails: repeat
+			if (!addRandomLimb(nodeID,s.getNextSeed())) n--;										// try limb add, if it fails: repeat
 		}
 		spec.setAllLimbSpecs(limbs);												// add limbs to spec (for later saving this info in db)
+		
+		return s.getNextSeed();
 	}
 	
-	int nodeIdChooser() {
+	int nodeIdChooser(long seed) {
 		int nodeId = 0;
 		int localNumLimbs = limbs.size();											// using limbs (not numNodes) so we can use the same function for morphs
-		
-		if (localNumLimbs>1 && SachMathUtil.randBoolean(lim_branchingBias)) {
+		SachMathUtil s = new SachMathUtil(); 
+		s.setSeed(seed);
+		if (localNumLimbs>1 && s.randBoolean(lim_branchingBias)) {
 			// find which nodes are not end-nodes: each cxdNode is a non-endNode
 			int[] nodesCxd = new int[localNumLimbs-1];
 			for (int n=0;n<localNumLimbs-1;n++) { 									// for each limb, find the nodeId (that they connect to), skip first limb
 				nodesCxd[n] = limbs.get(n+1).getNodeId();
 			}
 			nodesCxd = SachMathUtil.unique(nodesCxd);								// remove any duplicates
-			nodeId = nodesCxd[SachMathUtil.randRange(nodesCxd.length-1,0)];			// choose among non-endnodes
+			nodeId = nodesCxd[s.randRange(nodesCxd.length-1,0)];			// choose among non-endnodes
 		} else {
-			nodeId = SachMathUtil.randRange(numNodes-1,0); 							// just choose among all nodes
+			nodeId = s.randRange(numNodes-1,0); 							// just choose among all nodes
 		}
 		
 		return nodeId;
@@ -392,16 +398,21 @@ public class BsplineObject implements Drawable {
 			if (!match) endNodes.add(n);
 		}
 
+		Random rng = this.getRng();
+		SachMathUtil s = new SachMathUtil();
+		s.setSeed(rng.nextLong());
+		
 		MorphTypes morphType;
 		if (mType==-1){
 			// --choose which type of morph to apply:
-			morphType = chooseMorphType();
+			morphType = chooseMorphType(rng.nextLong());
 		}
 		else{
 			morphType = MorphTypes.values()[mType];	
 			System.out.print(morphType);
 		}
 
+		
 		// --perform chosen morph type:
 		int morphCounter = 0;
 		
@@ -410,12 +421,12 @@ public class BsplineObject implements Drawable {
 			flagReMorph = false;		// re-set flags
 			
 			if (flagDoDiffMorph) {
-				morphType = chooseMorphType();
+				morphType = chooseMorphType(rng.nextLong());
 				flagDoDiffMorph = false;
 			}
 			
 			// which limb to morph (for length, width, ori, etc):
-			int limbToMorph = SachMathUtil.randRange(localNumLimbs-1,0);
+			int limbToMorph = s.randRange(localNumLimbs-1,0);
 
 			// apply chosen morph type:
 			switch (morphType) {
@@ -425,11 +436,11 @@ public class BsplineObject implements Drawable {
 				runCreateObjFromSpec = false;	// (already created here, don't want to create again later)
 
 				boolean doSplit = false; //SachMathUtil.randBoolean();			// 50% of time a limb is added between nodes, not at the node
-				int nodeID = nodeIdChooser();
+				int nodeID = nodeIdChooser(rng.nextLong());
 
 				System.out.println("morph: add to node("+nodeID+") "+"split="+SachIOUtil.shortBool(doSplit));
 
-				if (!addRandLimbWithSplit(nodeID,doSplit)) {	// if add limb fails: reset limbs, set flag
+				if (!addRandLimbWithSplit(nodeID,doSplit,rng.nextLong())) {	// if add limb fails: reset limbs, set flag
 					// undo limb changes:
 					limbs = new ArrayList<LimbSpec>();
 					for (LimbSpec limb : old_limbs) {
@@ -443,7 +454,7 @@ public class BsplineObject implements Drawable {
 
 			case SUBTRACT:	// __subtract limb__ -- can only remove an end node!
 				// pick end-node to remove:
-				int idx = SachMathUtil.randRange(endNodes.size()-1,0);
+				int idx = s.randRange(endNodes.size()-1,0);
 				int nodeToRemove = endNodes.get(idx);
 				System.out.println("morph: remove node("+nodeToRemove+")");
 				removeEndLimb(nodeToRemove);
@@ -453,20 +464,20 @@ public class BsplineObject implements Drawable {
 			case LENGTH:	// __length__
 				System.out.println("morph: length of limb("+limbToMorph+")");
 				double l0 = limbs.get(limbToMorph).getLength();
-				double l = SachMathUtil.randUshaped(lim_minLength, lim_maxLength, l0);	// selects length by biasing away from old value
+				double l = s.randUshaped(lim_minLength, lim_maxLength, l0);	// selects length by biasing away from old value
 				//double l = SachMathUtil.randRange(lim_maxLength,lim_minLength);			// random length
 				limbs.get(limbToMorph).setLength(l);
 				break;
 
 			case WIDTH:	// __width__
 				System.out.println("morph: width of limb("+limbToMorph+")");
-				if (limbToMorph == 0 && SachMathUtil.randRange(1,0) == 1) {	// first limb, randomly choose node
+				if (limbToMorph == 0 && s.randRange(1,0) == 1) {	// first limb, randomly choose node
 					double w0 = limbs.get(limbToMorph).getWidth2();						
-					double w = SachMathUtil.randUshaped(lim_minWidth,lim_maxWidth,w0);	// random width by biasing away from old value
+					double w = s.randUshaped(lim_minWidth,lim_maxWidth,w0);	// random width by biasing away from old value
 					limbs.get(limbToMorph).setWidth2(w);
 				} else {
 					double w0 = limbs.get(limbToMorph).getWidth();
-					double w = SachMathUtil.randUshaped(lim_minWidth,lim_maxWidth,w0);	// random width by biasing away from old value
+					double w = s.randUshaped(lim_minWidth,lim_maxWidth,w0);	// random width by biasing away from old value
 					limbs.get(limbToMorph).setWidth(w);
 				}
 				break;
@@ -474,18 +485,18 @@ public class BsplineObject implements Drawable {
 			case ORI:	// __ori__
 				System.out.println("morph: ori of limb("+limbToMorph+")");
 				double ori0 = limbs.get(limbToMorph).getOri();
-				double ori = SachMathUtil.normAngle(SachMathUtil.randBoundedGauss(360/5, ori0+180, ori0, ori0+360));	// random ori by biasing away from other oris
+				double ori = SachMathUtil.normAngle(s.randBoundedGauss(360/5, ori0+180, ori0, ori0+360));	// random ori by biasing away from other oris
 				// double ori = SachMathUtil.randRange(359,0);				// random ori
 				limbs.get(limbToMorph).setOri(ori);				
 				break;
 
 			case CURV:	// __curv__ (only for end-nodes)
 				// pick end-node to morph:
-				int idx2 = SachMathUtil.randRange(endNodes.size()-1,0);
+				int idx2 = s.randRange(endNodes.size()-1,0);
 				int nodeToMorph = endNodes.get(idx2);
 				System.out.println("morph: curv of node("+nodeToMorph+")");
 
-				double[] curv = SachMathUtil.randRange(lim_maxCurv,lim_minCurv,4);	// random curvature
+				double[] curv = s.randRange(lim_maxCurv,lim_minCurv,4);	// random curvature
 				//double curv = SachMathUtil.randRange(cMax,cMin);		// random curvature -- morph one at a time?
 
 				if (nodeToMorph < 2) {	// node in 1st limb
@@ -502,7 +513,7 @@ public class BsplineObject implements Drawable {
 					limbs.get(0).setCurv(oldCurv);
 				} else {				// other limb
 					double[] curv0 = limbs.get(nodeToMorph-1).getCurv();
-					curv = SachMathUtil.randUshaped(lim_minCurv, lim_maxCurv, curv0, curv0.length); 
+					curv = s.randUshaped(lim_minCurv, lim_maxCurv, curv0, curv0.length); 
 					limbs.get(nodeToMorph-1).setCurv(curv);
 				}
 				break;
@@ -510,7 +521,7 @@ public class BsplineObject implements Drawable {
 			case SMOOTH: // __isSmoother__ (number of 3 vs 4 ctrl pt nodes)
 				System.out.println("morph: smoothness of limb("+limbToMorph+")");
 				// options: change 1 node, change all nodes
-				if (limbToMorph == 0 && SachMathUtil.randRange(1,0) == 1) {	// first limb, 2nd node
+				if (limbToMorph == 0 && s.randRange(1,0) == 1) {	// first limb, 2nd node
 					boolean isSm0 = limbs.get(limbToMorph).isSmoother2();
 					limbs.get(limbToMorph).setIsSmoother2(!isSm0);
 				} else {													// any other node
@@ -520,12 +531,12 @@ public class BsplineObject implements Drawable {
 				break;
 
 			case GLOBAL_ORI: // __global ori__
-				global_ori = SachMathUtil.normAngle(SachMathUtil.randRange(global_ori+25, global_ori-25));
+				global_ori = SachMathUtil.normAngle(s.randRange(global_ori+25, global_ori-25));
 				System.out.println("morph: global ori (" + global_ori + ")");
 				break;
 
 			case SIZE: // __size__ (global)
-				size = SachMathUtil.randRange(lim_maxSize, lim_minSize);
+				size = s.randRange(lim_maxSize, lim_minSize);
 				System.out.println("morph: global size (" + size + ")");
 				break;
 				
@@ -716,6 +727,10 @@ public class BsplineObject implements Drawable {
 		List<Integer> limbsToMorph = new ArrayList<Integer>();
 
 	
+		SachMathUtil s = new SachMathUtil();
+		Random rng = this.getRng();
+		s.setSeed(rng.nextLong());
+		
 //System.out.println("createLengthWidthMorphObj: " + numLimbsTotal + " total limbs ");
 //System.out.format("\t%s : %4s %6s %6s\n", "Dim", "limb", "dim0", "dim1");
 		
@@ -724,11 +739,11 @@ public class BsplineObject implements Drawable {
 			
 			limbsToMorph.clear();
 			// randomly select how  limbs to morph between 1 and numLimbs
-			numLimbs = SachMathUtil.randRange(this.getLimbs().size(), 2);
+			numLimbs = s.randRange(this.getLimbs().size(), 2);
 			// 
 			//if(numLimbs == 1) numLimbs = 2;
 			
-			List<Integer> indices = SachMathUtil.randUniqueRange(this.getLimbs().size() - 1, 0, numLimbs);
+			List<Integer> indices = s.randUniqueRange(this.getLimbs().size() - 1, 0, numLimbs);
 	
 			for(int i = 0; i < numLimbs; i++){
 				limbsToMorph.add(indices.get(i));
@@ -766,7 +781,7 @@ public class BsplineObject implements Drawable {
 						dim0 = dMax;
 					}
 					
-					newDim = SachMathUtil.randUshapedPoly(dMin, dMax, dim0, bias);	// selects length by biasing away from old value
+					newDim = s.randUshapedPoly(dMin, dMax, dim0, bias);	// selects length by biasing away from old value
 					limbs.get(limbNum).setLength(newDim);
 										
 					System.out.format("\tlength : %4d %6.4f %6.4f\n", limbNum, dim0, newDim);
@@ -792,7 +807,7 @@ public class BsplineObject implements Drawable {
 					if (dim0 > dMax){
 						dim0 = dMax;
 					}
-					newDim = SachMathUtil.randUshapedPoly(dMin, dMax, dim0, bias);	// selects length by biasing away from old value
+					newDim = s.randUshapedPoly(dMin, dMax, dim0, bias);	// selects length by biasing away from old value
 					limbs.get(limbNum).setWidth(newDim);
 					System.out.format("\twidth : %4d %6.4f %6.4f\n", limbNum, dim0, newDim);
 				}
@@ -810,7 +825,7 @@ public class BsplineObject implements Drawable {
 
 	} // end JK createLengthWidthMorphObj();
 	
-	private MorphTypes chooseMorphType() {
+	private MorphTypes chooseMorphType(long seed) {
 		// --choose which type of morph to apply:
 		int localNumLimbs = limbs.size();
 
@@ -831,11 +846,13 @@ public class BsplineObject implements Drawable {
 			propAdd = 0.50;
 		}
 
-		if (SachMathUtil.randBoolean(propAddSub)) {	// if add/subtract limb
-			morphType = SachMathUtil.randBoolean(propAdd) ? MorphTypes.ADD : MorphTypes.SUBTRACT;
+		SachMathUtil s = new SachMathUtil();
+		s.setSeed(seed);
+		if (s.randBoolean(propAddSub)) {	// if add/subtract limb
+			morphType = s.randBoolean(propAdd) ? MorphTypes.ADD : MorphTypes.SUBTRACT;
 		} else {									// do one of the other morphs
 			// limb morph types & proportions:  (l,w,ori,curv,smooth,global ori,size,canonical)
-			BiasRandom br = new BiasRandom( new double[]{ 1,1,1,1,1,2,1,1 });
+			BiasRandom br = new BiasRandom(new Random(s.getNextSeed()), new double[]{ 1,1,1,1,1,2,1,1 });
 			//					BiasRandom br = new BiasRandom( new double[]{ 0,0,0,0,0,1,1,1 });	// testing
 			morphType = MorphTypes.values()[br.selectEvent()+2];
 		}
@@ -1428,7 +1445,7 @@ public class BsplineObject implements Drawable {
 		return true;
 	}
 	
-	public boolean addRandLimbWithSplit(int nodeID, boolean doSplit) {
+	public boolean addRandLimbWithSplit(int nodeID, boolean doSplit,long seed) {
 								
 		// if adding between nodes, split here:
 		if (doSplit) {	// split the limb that the node forms
@@ -1445,7 +1462,7 @@ public class BsplineObject implements Drawable {
 		
 		// then try to add limb:	
 		for (int n=0;n<20;n++) {	// try adding limb at most X times
-			if (addRandomLimb(nodeID)) return true;
+			if (addRandomLimb(nodeID,seed)) return true;
 		}
 		
 		return false;
@@ -1455,29 +1472,30 @@ public class BsplineObject implements Drawable {
 
 	}
 	
-	public boolean addRandomLimb(int nodeID) {
+	public boolean addRandomLimb(int nodeID,long seed) {
 		// this method adds a limb with random specs (l,w,ori,curv,isSmoother) to a given node.
 		// if it fails, then no limb is added and we return false.
 
 		// okay, have nodeID adding to, so get ori from that node
 		int limbID = nodeID>0 ? nodeID-1 : 0;	// get limbID from nodeID
 		double ori0 = limbs.get(limbID).getOri();
-		
-		double l = SachMathUtil.randRange(lim_maxLength,lim_minLength);			// random length
-		double w = SachMathUtil.randRange(lim_maxWidth,lim_minWidth);			// random width
+		SachMathUtil s = new SachMathUtil(); 
+		s.setSeed(seed);
+		double l = s.randRange(lim_maxLength,lim_minLength);			// random length
+		double w = s.randRange(lim_maxWidth,lim_minWidth);			// random width
 		double ori = 0;	//SachMathUtil.randRange(lim_maxOri,lim_minOri);				// random ori
-		double[] curv = SachMathUtil.randRange(lim_maxCurv,lim_minCurv,4);		// random curvature
-		boolean isSmoother = SachMathUtil.randBoolean(lim_propSmoothNodes);		// random 3 or 4 control pt limb
+		double[] curv = s.randRange(lim_maxCurv,lim_minCurv,4);		// random curvature
+		boolean isSmoother = s.randBoolean(lim_propSmoothNodes);		// random 3 or 4 control pt limb
 		
 		// ori: (20% of time, just pick ori_source (same ori), otherwise bias away from near oris
-		if (SachMathUtil.randBoolean(lim_propParallelLimbs)) {
+		if (s.randBoolean(lim_propParallelLimbs)) {
 			ori = rescaleOri(ori0);	// parallel angle
 		} else {
 			double sigma = 45; 	//deg; % within 20deg of ori0: sigma=30: ~1.65%, 45: ~7.5%, 60: ~11%, [flat dist: 22%] 
 			double mu = ori0+90;//deg
 			double vMin = ori0, vMax = ori0+180;
-			ori = SachMathUtil.randBoundedGauss(sigma, mu, vMin, vMax);
-			ori = SachMathUtil.randBoolean() ? ori : rescaleOri(-ori); // equal dist of +/- oris
+			ori = s.randBoundedGauss(sigma, mu, vMin, vMax);
+			ori = s.randBoolean() ? ori : rescaleOri(-ori); // equal dist of +/- oris
 		}
 		
 		if (!addLimb(nodeID,l,w,ori,curv,isSmoother)) return false; // add limb; if addLimb fails return false
@@ -1523,26 +1541,29 @@ public class BsplineObject implements Drawable {
 	}
 	public boolean addManualLimb(int nodeID,double l,double w,double ori,boolean isCanonical){
 		int limbID = nodeID>0 ? nodeID-1 : 0;	// get limbID from nodeID
+		SachMathUtil s = new SachMathUtil();
+		Random rng = this.getRng();
+		s.setSeed(rng.nextLong());
 		
 		if (l==-1){
-			l = SachMathUtil.randRange(lim_maxLength,lim_minLength);
+			l = s.randRange(lim_maxLength,lim_minLength);
 		}
 		if (w==-1){
-			w = SachMathUtil.randRange(lim_maxWidth,lim_minWidth);
+			w = s.randRange(lim_maxWidth,lim_minWidth);
 		}
 		if (ori==-1){
 			double ori0 = limbs.get(limbID).getOri();
 			double sigma = 45; 	//deg; % within 20deg of ori0: sigma=30: ~1.65%, 45: ~7.5%, 60: ~11%, [flat dist: 22%] 
 			double mu = ori0+90;//deg
 			double vMin = ori0, vMax = ori0+180;
-			ori = SachMathUtil.randBoundedGauss(sigma, mu, vMin, vMax);
-			ori = SachMathUtil.randBoolean() ? ori : rescaleOri(-ori);
+			ori = s.randBoundedGauss(sigma, mu, vMin, vMax);
+			ori = s.randBoolean() ? ori : rescaleOri(-ori);
 		}
 		double[] curv = new double[]{1,1,1,1};
 		boolean isSmoother = false;
 		if(!isCanonical){
-			curv = SachMathUtil.randRange(lim_maxCurv,lim_minCurv,4);		// random curvature
-			isSmoother = SachMathUtil.randBoolean(lim_propSmoothNodes);		// random 3 or 4 control pt limb
+			curv = s.randRange(lim_maxCurv,lim_minCurv,4);		// random curvature
+			isSmoother = s.randBoolean(lim_propSmoothNodes);		// random 3 or 4 control pt limb
 		}
 		
 		if (!addLimb(nodeID,l,w,ori,curv,isSmoother)) return false; // add limb; if addLimb fails return false
@@ -1901,6 +1922,10 @@ public class BsplineObject implements Drawable {
 //		xPos = xPos+SachMathUtil.randRange(1,-1); 				// jitter position (for debugging)
 //		yPos = yPos+SachMathUtil.randRange(1,-1);
 
+		SachMathUtil s = new SachMathUtil();
+		Random rng = this.getRng();
+		s.setSeed(rng.nextLong());
+		
 		double pL = 0.0, pW = 0.0; 								// percent change in lengths and widths (when randomized) (goes from 0 to 1)
 		
 		if (doRand) {
@@ -1910,8 +1935,8 @@ public class BsplineObject implements Drawable {
 
 		double lMax = 1*(1+pL), lMin = 0.9999*(1-pL);			// range for lengths
 		double wMax = 1*(1+pW), wMin = 0.9999*(1-pW);			// range for widths
-		double[] l = SachMathUtil.randRange(lMax,lMin,10);		// random lengths array (for up to 10 limbs)
-		double w = SachMathUtil.randRange(wMax,wMin);			// random widths, across all limbs in stim
+		double[] l = s.randRange(lMax,lMin,10);		// random lengths array (for up to 10 limbs)
+		double w = s.randRange(wMax,wMin);			// random widths, across all limbs in stim
 		// TODO: set these limits to global lims?
 		
 		// TODO: finish morph line stuff!
@@ -2378,6 +2403,9 @@ public class BsplineObject implements Drawable {
 //		yPos = yPos+SachMathUtil.randRange(1,-1);
 
 		double pL = 0.0, pW = 0.0; 								// percent change in lengths and widths (when randomized) (goes from 0 to 1)
+		SachMathUtil s = new SachMathUtil();
+		Random rng = this.getRng();
+		s.setSeed(rng.nextLong());
 		
 		if (doRand) {
 			pL = 0.0;	//0.2; 0.4; TODO: these limit how much lengths and width are allowed to change!						
@@ -2386,8 +2414,8 @@ public class BsplineObject implements Drawable {
 
 		double lMax = 1*(1+pL), lMin = 0.9999*(1-pL);			// range for lengths
 		double wMax = 1*(1+pW), wMin = 0.9999*(1-pW);			// range for widths
-		double[] l = SachMathUtil.randRange(lMax,lMin,10);		// random lengths array (for up to 10 limbs)
-		double w = SachMathUtil.randRange(wMax,wMin);			// random widths, across all limbs in stim
+		double[] l = s.randRange(lMax,lMin,10);		// random lengths array (for up to 10 limbs)
+		double w = s.randRange(wMax,wMin);			// random widths, across all limbs in stim
 		// TODO: set these limits to global lims?
 		
 		// TODO: finish morph line stuff!
@@ -3464,6 +3492,14 @@ public class BsplineObject implements Drawable {
 		// create stimulus:
 		createObj();
 
+	}
+	
+	public Random getRng() {
+		return this.spec.getRng();
+	}
+	
+	public void setRng(Random rng) {
+		this.spec.setRng(rng);
 	}
 	
 	// use this to only UPDATE the spec (object has already been created)

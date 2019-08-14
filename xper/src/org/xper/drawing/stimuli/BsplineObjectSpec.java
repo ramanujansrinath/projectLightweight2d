@@ -2,6 +2,7 @@ package org.xper.drawing.stimuli;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.xper.utils.SachMathUtil;
 
@@ -30,6 +31,7 @@ public class BsplineObjectSpec {
 	double foreColor[] = {0.0, 0.0, 0.0, 1.0};
 	double backColor[] = {0.0, 0.0, 0.0, 1.0};
 	double fader = 1.0; 								// fade to black color factor
+	Random rng = new Random();
 		
 	// JK 25 April 2016 - changing to category based colors
 	//							 r     g     b         a             cat
@@ -268,11 +270,13 @@ public class BsplineObjectSpec {
 		else {
 			setForeColor(0.0, 0.0, 0.0, 1.0);
 		}
+		SachMathUtil s = new SachMathUtil();
+		s.setSeed(rng.nextLong());
 		
 		if(shouldUseSizeCues){
 			if(category > -1 && category < BsplineObject.getNumCategories()){
 				//setSize(BaseSize + (SizeGrowthValues[category] * growthFactor));
-				setSize(SachMathUtil.randRange(upperSizeBound, lowerSizeBound));
+				setSize(s.randRange(upperSizeBound, lowerSizeBound));
 			}
 			//System.out.println("BSOSpec::setCategory(int, bool) : " + category + " : size = = " + getSize());
 		}
@@ -445,5 +449,12 @@ public class BsplineObjectSpec {
 			out = out && (limbs.get(ll).getWidth()==1);
 		}
 		return out;
+	}
+	
+	public Random getRng() {
+		return this.rng;
+	}
+	public void setRng(Random rng) {
+		this.rng = rng;
 	}
 }

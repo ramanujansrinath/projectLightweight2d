@@ -33,6 +33,9 @@ public class BiasRandom {
 		this(new Random(),numbers);
 	}
 	
+	public long nextSeed() {
+		return random.nextLong();
+	}
 	
 	public void addValue(double num) {
 		sum = sum + num;

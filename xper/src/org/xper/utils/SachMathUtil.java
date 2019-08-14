@@ -25,17 +25,20 @@ public class SachMathUtil {
 		rand.setSeed(seed);
 	}
 	
-	public static long getSeed() {
+	public long getSeed() {
 		return seed;
 	}
 
-	public static void setSeed(long newSeed){
+	public void setSeed(long newSeed){
 		seed = newSeed;
 		rand.setSeed(seed);
 		
 	}
 	
-	
+	public long getNextSeed() {
+		return rand.nextLong();
+	}
+
 	
 	
 	public static double sind(double deg) {
@@ -123,7 +126,7 @@ public class SachMathUtil {
 	//    more efficient than Math.random().
 	//     
 	
-	public static int randRange(int upper, int lower) {
+	public int randRange(int upper, int lower) {
 		// this creates a random number between upper and lower (inclusive)
 		if (lower > upper) System.out.println("---Error: lower is larger than upper!---");
 		int range = upper - lower + 1;
@@ -132,7 +135,7 @@ public class SachMathUtil {
 		return randInt;
 	}
 	
-	public static int[] randRange(int upper, int lower, int numRands) {
+	public int[] randRange(int upper, int lower, int numRands) {
 		if (lower > upper) System.out.println("---Error: lower is larger than upper!---");
 		int[] randArray = new int[numRands];
 		for (int n=0;n<numRands;n++) {
@@ -141,13 +144,13 @@ public class SachMathUtil {
 		return randArray;
 	}
 	
-	public static double randRange(double upper, double lower) {
+	public double randRange(double upper, double lower) {
 		// this creates a random number between upper and lower
 		double randVal = rescaleValue(rand.nextDouble(),upper,lower);
 		return randVal;
 	}
 	
-	public static double[] randRange(double upper, double lower,int numRands) {
+	public double[] randRange(double upper, double lower,int numRands) {
 		// this creates a random number between upper and lower
 		double[] randArray = new double[numRands];
 		for (int n=0;n<numRands;n++) {
@@ -156,7 +159,7 @@ public class SachMathUtil {
 		return randArray;
 	}
 	
-	public static float randRange(float upper, float lower) {
+	public float randRange(float upper, float lower) {
 		// this creates a random number between upper and lower
 		float randVal = rescaleValue((float)rand.nextFloat(),upper,lower);
 		return randVal;
@@ -164,7 +167,7 @@ public class SachMathUtil {
 	
 	
 	// JK 1 Sept 2016
-	public static List<Integer> randUniqueRange(int upper, int lower, int numRands){
+	public List<Integer> randUniqueRange(int upper, int lower, int numRands){
 		if (lower > upper) System.out.println("---Error randUniqueRange(): lower is larger than upper! : " + upper + " < " + lower);
 		List<Integer> vals = new ArrayList<Integer>();
 		int size = upper - lower + 1;
@@ -199,11 +202,11 @@ public class SachMathUtil {
 		return x;
 	}
 	
-	public static boolean randBoolean(){
+	public boolean randBoolean(){
 		return rand.nextBoolean();
 	}
 	
-	public static boolean[] randBoolean(double propTrue,int numRands){
+	public boolean[] randBoolean(double propTrue,int numRands){
 		// propTrue: the average proportion of 'true' results (0:1)
 		// numRands: the number of random booleans to create
 		boolean[] out = new boolean[numRands];
@@ -213,22 +216,22 @@ public class SachMathUtil {
 		return out;
 	}
 	
-	public static boolean randBoolean(double propTrue){
+	public boolean randBoolean(double propTrue){
 		return randBoolean(propTrue,1)[0];
 	}
 	
-	public static double randGauss(double sigma,double mu) {
+	public double randGauss(double sigma,double mu) {
 		return rand.nextGaussian() * sigma + mu;		
 	}
 	
-	public static double randBoundedGauss(double sigma, double mu, double vMin, double vMax) {
+	public double randBoundedGauss(double sigma, double mu, double vMin, double vMax) {
 		double out;
-		do { out = SachMathUtil.randGauss(sigma,mu);
+		do { out = this.randGauss(sigma,mu);
 		} while (out < vMin || out > vMax);
 		return out;		
 	}
 	
-	public static double randUshaped(double vMin,double vMax, double ctr) {
+	public double randUshaped(double vMin,double vMax, double ctr) {
 		// input checking:
 		if (vMin >= vMax || ctr < vMin || ctr > vMax) {
 			System.err.println("ERROR: check inputs!! ctr must lie between vMin and vMax!");
@@ -275,23 +278,23 @@ public class SachMathUtil {
 		return p+vMin;	// add back vMin
 	}
 
-	public static double[] randUshaped(double vMin,double vMax, double ctr,int numVals) {
+	public double[] randUshaped(double vMin,double vMax, double ctr,int numVals) {
 		double[] p = new double[numVals];
 		for (int n=0;n<numVals;n++) {
-			p[n] = randUshaped(vMin,vMax,ctr);
+			p[n] = this.randUshaped(vMin,vMax,ctr);
 		}
 		return p;
 	}
 	
-	public static double[] randUshaped(double vMin,double vMax, double[] ctr,int numVals) {
+	public double[] randUshaped(double vMin,double vMax, double[] ctr,int numVals) {
 		double[] p = new double[numVals];
 		for (int n=0;n<numVals;n++) {
-			p[n] = randUshaped(vMin,vMax,ctr[n]);
+			p[n] = this.randUshaped(vMin,vMax,ctr[n]);
 		}
 		return p;
 	}
 	
-	public static double randUshapedPoly(double vMin,double vMax, double ctr, double bias){
+	public double randUshapedPoly(double vMin,double vMax, double ctr, double bias){
 		if ((bias<0) || (bias>1)){
 			System.err.println("ERROR: bias must be within [0,1]");
 		}

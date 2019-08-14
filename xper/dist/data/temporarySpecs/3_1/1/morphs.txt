@@ -1,0 +1,11 @@
+133172;dist\data\temporarySpecs\3_1\1\;33;80;True;False
+0;dist\data\temporarySpecs\3_1\1\;33;81;True;False
+0;dist\data\temporarySpecs\3_1\1\;33;82;True;False
+0;dist\data\temporarySpecs\3_1\1\;33;83;True;False
+0;dist\data\temporarySpecs\3_1\1\;33;84;True;False
+0;dist\data\temporarySpecs\3_1\1\;33;85;True;False
+0;dist\data\temporarySpecs\3_1\1\;33;86;True;False
+0;dist\data\temporarySpecs\3_1\1\;33;87;True;False
+0;dist\data\temporarySpecs\3_1\1\;33;88;True;False
+0;dist\data\temporarySpecs\3_1\1\;33;89;True;False
+0;dist\data\temporarySpecs\3_1\1\;33;90;True;False

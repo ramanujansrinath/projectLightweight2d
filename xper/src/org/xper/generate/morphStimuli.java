@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.xper.drawing.drawables.PNGmaker;
 import org.xper.drawing.stimuli.BsplineObject;
@@ -23,10 +25,28 @@ public class morphStimuli {
 		String folderPath = "";
 		int obj_counter=0;
 		boolean doSaveImage = false;
+		Random rng = new Random();
         for (String line = br.readLine(); line != null; line = br.readLine()) {
             String[] args = line.split(";"); 	        
 
-	    		/* args:
+	    		/* 
+	    		 * new args AWC 08/13/2019
+	    		 *    (required args)
+	    		 * 0. seed
+	    		 * 1. folderPath
+	    		 * 2. parentId
+	    		 * 3. childId
+	    		 * 4. doSaveSpec
+	    		 * 5. doSaveImage
+				 * 
+				 *    (conditional to doSaveImage)
+	    		 * 6. doCenter
+	    		 * 7. size
+	    		 * 8. contrast
+	    		 * 9-11 foreColor
+	    		 * 12-14 backColor
+	    		 * 
+	    		 * old args:
 				0. folderPath: 
 				1. parentId:
 				2. childId:
@@ -39,25 +59,32 @@ public class morphStimuli {
 				11-13. backColor:
 			*/
 			
-			folderPath = args[0].trim();
-            long parentId = Long.parseLong(args[1].trim());
-			long childId = Long.parseLong(args[2].trim());
-			double size = Double.parseDouble(args[3].trim());
-			boolean doCenter = Boolean.parseBoolean(args[4].trim());
-			double contrast = Double.parseDouble(args[5].trim());
-			boolean doSaveSpec = Boolean.parseBoolean(args[6].trim());
-			doSaveImage = Boolean.parseBoolean(args[7].trim());
+            long seed = Long.parseLong(args[0].trim());
+			folderPath = args[1].trim();
+            long parentId = Long.parseLong(args[2].trim());
+			long childId = Long.parseLong(args[3].trim());
+			boolean doSaveSpec = Boolean.parseBoolean(args[4].trim());
+			doSaveImage = Boolean.parseBoolean(args[5].trim());
 			
-			RGBColor foreColor;
-			RGBColor backColor;
+
+			boolean doCenter = false; 
+			double size = 1.0; 
+			double contrast = 1.0; 
+			
+			RGBColor foreColor = new RGBColor(1,1,1);;
+			RGBColor backColor = new RGBColor(0,0,0);;
 			if (doSaveImage){
-				foreColor = new RGBColor(Float.parseFloat(args[ 8]),Float.parseFloat(args[ 9]),Float.parseFloat(args[10]));
-				backColor = new RGBColor(Float.parseFloat(args[11]),Float.parseFloat(args[12]),Float.parseFloat(args[13]));
+				doCenter = Boolean.parseBoolean(args[6].trim());
+				size = Double.parseDouble(args[7].trim());
+				contrast = Double.parseDouble(args[8].trim());
+				foreColor = new RGBColor(Float.parseFloat(args[ 9]),Float.parseFloat(args[10]),Float.parseFloat(args[11]));
+				backColor = new RGBColor(Float.parseFloat(args[12]),Float.parseFloat(args[13]),Float.parseFloat(args[14]));
 			}
-			else{
-				foreColor = new RGBColor(1,1,1);
-				backColor = new RGBColor(0,0,0);
-			}
+
+			if (seed>0)
+				rng.setSeed(seed);
+			else
+				rng.setSeed(rng.nextLong());
 			
 			// make centered morph obj
 			ids.add(childId);
@@ -71,6 +98,7 @@ public class morphStimuli {
 			
 			objs.get(obj_counter).genShapeFromFile(folderPath,parentId);
 			objs.get(obj_counter).setDoMorph(true);
+			objs.get(obj_counter).setRng(rng);
 			objs.get(obj_counter).createObj();
 				
 			if (doSaveSpec) {
